@@ -1,0 +1,23 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(bnlearn)
+```
+nodes must be a vector of character strings
+```{r}
+bn = empty.graph(c("SP1", "LB1", "CP1", 
+                      "VX1", "UR1", "SP2"))
+arc.set <- matrix(c("SP1", "SP2", "LB1", "SP2", "CP1", 
+                    "SP2", "SP1", "VX1", "UR1", "CP1", 
+                    "VX1", "SP2", "UR1", "SP2"),
+                  ncol = 2, byrow = TRUE,
+                  dimnames = list(NULL, c('from', 'to')))
+arc.set
+```
+```{r}
+arcs(bn) <- arc.set
+bn
+```
+
