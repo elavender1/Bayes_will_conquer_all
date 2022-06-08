@@ -4,6 +4,9 @@ output: html_notebook
 ---
 ```{r}
 library(bnlearn)
+library(Rgraphviz)
+library(tidyquant)
+library(dplyr)
 ```
 nodes must be a vector of character strings
 ```{r}
@@ -20,4 +23,35 @@ arc.set
 arcs(bn) <- arc.set
 bn
 ```
+
+```{r}
+graphviz.plot(bn, layout = "dot")
+```
+
+```{r}
+bayes_data <- read.csv('bayes_df.csv')
+bayes_data
+```
+
+```{r}
+bayes_data$X <- NULL
+bayes_data$Volume <- NULL
+bayes_data$CPIAUCSL <- NULL
+bayes_data$Adj.Close <- NULL
+bayes_data$VIXCLS <- NULL
+bayes_data
+```
+```{r}
+colnames(bayes_data) <- c('Date', 'LB1', 'CP1', 'UR1', 'SP1', 'VX1')
+bayes_data
+```
+Convert Date to date object and index
+```{r}
+bayes_data$Date <- as.POSIXct(bayes_data$Date)
+rownames(bayes_data) <- bayes_data$Date
+bayes_data$Date <- NULL
+bayes_data
+```
+```{r}
+
 
